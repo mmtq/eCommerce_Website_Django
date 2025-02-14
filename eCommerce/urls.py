@@ -16,9 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from core.views import index
+from core.views import index, shop
+from product.views import product
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
     path('', index),
+    path('shop/', shop, name='shop'),
+    path('product/', product, name='product'),
 ]
