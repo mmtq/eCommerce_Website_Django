@@ -6,9 +6,9 @@
         <img src="" alt="" class="rounded-xl">
     </div>
     <div class="information w-full lg:w-2/5 lg:p-6">
-        <h1 class="text-2xl">Product Name</h1>
-        <p class="mt-1 text-gray-400">$99.99</p>
-        <p class="mt-6 text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo ad, excepturi dignissimos sint facilis laudantium libero velit, minima molestias obcaecati ex! Asperiores dicta distinctio labore voluptas dolor, perspiciatis alias porro?</p>
+        <h1 class="text-2xl">{{ product.name }}</h1>
+        <p class="mt-1 text-gray-400">{{ product.category.name }}</p>
+        <p class="mt-6 text-gray-700">{{ product.description }}</p>
         <a href="#" class="mt-6 inline-block px-8 py-4 rounded-xl bg-purple-500 text-white hover:bg-purple-700">Add to Cart</a>
     </div>
 </div>
