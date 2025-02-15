@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.urls import path, include
 from core.views import index, shop
 from product.views import product
+from cart.views import add_to_cart
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("__reload__/", include("django_browser_reload.urls")),
     path('', index),
     path('shop/', shop, name='shop'),
     path('product/<str:slug>/', product, name='product'),
+    path('add-to-cart/<int:product_id>/', add_to_cart, name='add_to_cart'),
 ]
