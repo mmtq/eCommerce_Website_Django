@@ -18,13 +18,15 @@ from django.contrib import admin
 from django.urls import path, include
 from core.views import index, shop
 from product.views import product
-from cart.views import add_to_cart
+from cart.views import add_to_cart, cart, checkout
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
     path('', index),
     path('shop/', shop, name='shop'),
+    path('cart/', cart, name='cart'),
+    path('cart/checkout/', checkout, name='checkout'),
     path('product/<str:slug>/', product, name='product'),
     path('add-to-cart/<int:product_id>/', add_to_cart, name='add_to_cart'),
 ]
