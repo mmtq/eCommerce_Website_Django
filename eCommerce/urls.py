@@ -21,6 +21,7 @@ from product.views import product
 from cart.views import add_to_cart
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
     path('', index),
     path('shop/', shop, name='shop'),

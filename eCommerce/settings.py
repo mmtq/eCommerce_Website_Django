@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 1
+
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2  # 2 weeks
 
 CART_SESSION_ID = 'cart'
@@ -41,10 +43,44 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_browser_reload',
+]
+
+ALLAUTH_APPS = [
+    # Required for `django-allauth`
+    'django.contrib.sites',  # Needed for social auth & email verification
+    # Allauth apps
+    'allauth',
+    'allauth.account',  # Core authentication
+    'allauth.socialaccount',  # Social authentication (optional)
+    'allauth.socialaccount.providers.google',  # Example: Google login (optional)
+]
+
+LOCAL_APPS = [
     'core',
     'product',
     'cart',
 ]
+
+INSTALLED_APPS += ALLAUTH_APPS + LOCAL_APPS
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',  # Default authentication
+    'allauth.account.auth_backends.AuthenticationBackend',  # Django Allauth
+]
+
+# Login settings
+ACCOUNT_LOGIN_METHODS = {'email', 'username'}
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "optional"  # Can be 'mandatory', 'optional', or 'none'
+ACCOUNT_USERNAME_REQUIRED = True
+
+# Redirect URLs after login/logout
+LOGIN_REDIRECT_URL = '/'  # Redirect after login
+LOGOUT_REDIRECT_URL = '/'  # Redirect after logout
+
+# Email configuration (if using email verification)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # Use console for development
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -55,6 +91,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
+    'allauth.account.middleware.AccountMiddleware', # Django Allauth
 ]
 
 ROOT_URLCONF = 'eCommerce.urls'
@@ -62,7 +99,7 @@ ROOT_URLCONF = 'eCommerce.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
