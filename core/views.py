@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db.models import Q
 from product.models import Product, Category
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.contrib import messages
 # Create your views here.
 
 def index(request):
@@ -28,3 +31,23 @@ def shop(request):
         'active_category': active_category
     }
     return render(request, 'core/shop.html', context)
+
+
+@login_required
+def profile(request):
+    return render(request, 'core/profile.html')
+
+@login_required
+def edit_profile(request):
+    user = request.user
+    if request.method == 'POST':
+        user.first_name = request.POST.get('first_name')
+        user.last_name = request.POST.get('last_name')
+        user.username = request.POST.get('username')
+        user.email = request.POST.get('email')
+        user.save()
+        messages.success(request, 'Profile updated successfully')
+        
+        return redirect('profile')
+            
+    return render(request, 'core/edit_profile.html')
