@@ -2,46 +2,19 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <title>Document</title>
+    <title>{% block title %}Nordic Holmes{% endblock %}</title>
 </head>
+
 <body>
     {% block body %}
-    {% if messages %}
-    <div x-data="{ show: true }" x-init="setTimeout(() => show = false, 5000)" x-show="show"
-         class="fixed bottom-4 right-4 z-50">
-      <div x-show="show"
-           x-transition:enter="transition ease-out duration-300"
-           x-transition:enter-start="opacity-0 transform translate-y-2"
-           x-transition:enter-end="opacity-100 transform translate-y-0"
-           x-transition:leave="transition ease-in duration-300"
-           x-transition:leave-start="opacity-100 transform translate-y-0"
-           x-transition:leave-end="opacity-0 transform translate-y-2"
-           class="relative bg-white p-4 rounded-lg shadow-lg border border-green-500 border-2">
-        
-        <!-- Close Button -->
-        <button @click="show = false"
-                class="absolute top-1 right-1 text-gray-600 hover:text-gray-800 focus:outline-none">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-        
-        <!-- Toast Content -->
-        <strong class="block text-sm font-bold mb-2">{% trans "Messages:" %}</strong>
-        <ul class="list-disc pl-5 text-sm">
-          {% for message in messages %}
-            <li>{{ message }}</li>
-          {% endfor %}
-        </ul>
-      </div>
-    </div>
-  {% endif %}
-        <!-- <div>
+    {% include 'partials/messages.html' %}
+    <!-- <div>
         <strong>{% trans "Menu:" %}</strong>
         <ul>
             {% if user.is_authenticated %}
@@ -97,9 +70,9 @@
             {% endif %}
         </ul>
     </div> -->
-{% endblock body %}
-{% block extra_body %}
-{% endblock extra_body %}
+    {% endblock body %}
+    {% block extra_body %}
+    {% endblock extra_body %}
 
     <nav class="border-b border-gray-300">
         <div class="max-w-6xl mx-auto py-2 px-6 xl:px-0 flex items-center justify-between">
@@ -111,18 +84,24 @@
                 </ul>
             </div>
             <div class="menu-right flex items-center space-x-4">
-                <a href="#">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                      </svg>                      
-                </a>
                 {% include 'cart/menu_cart.html'%}
                 {% if user.is_authenticated %}
-                        <a href="{% url 'account_logout'%}" class="text-red-500 hover:text-red-600">Logout</a>
-                    {% else %}
-                        <a href="{% url 'account_login'%}" class="text-purple-500 hover:text-purple-800">Login</a>
-                        <a href="{% url 'account_signup'%}" class="text-purple-500 hover:text-purple-800">Signup</a>
-                    {% endif %}
+                <a href="{% url 'account_logout'%}" class="text-red-500 hover:text-red-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
+                    </svg>
+                </a>
+                {% else %}
+                <a href="{% url 'account_login'%}" class="text-purple-500 hover:text-purple-800">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                </a>
+                {% endif %}
             </div>
         </div>
     </nav>
@@ -136,11 +115,13 @@
         <div class="max-w-6xl mx-auto py-10 px-6 xl:px-0 md:flex justify-between">
             <div class="footer-left mb-12 md:mb-0">
                 <h2 class="mb-5 uppercase text-lg">About Us</h2>
-                <p class="text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, atque maxime voluptatum molestiae ut quaerat deserunt! Exercitationem, nemo iusto? Harum ea est similique, odit sunt aliquam distinctio enim! Enim, iusto?</p>
+                <p class="text-gray-700">Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, atque
+                    maxime voluptatum molestiae ut quaerat deserunt! Exercitationem, nemo iusto? Harum ea est similique,
+                    odit sunt aliquam distinctio enim! Enim, iusto?</p>
             </div>
             <div class="footer-right">
                 <h2 class="mb-5 uppercase text-lg">Social Links</h2>
-                
+
                 <ul class="space-y-2">
                     <li><a href="#" class="text-purple-500 hover:text-purple-800">Facebook</a></li>
                     <li><a href="#" class="text-purple-500 hover:text-purple-800">Twitter</a></li>
@@ -151,6 +132,9 @@
         </div>
     </footer>
 
-    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.4"
+        integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+"
+        crossorigin="anonymous"></script>
 </body>
+
 </html>
