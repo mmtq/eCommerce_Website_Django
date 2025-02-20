@@ -1,0 +1,17 @@
+<div class="product mb-6 flex pr-6">
+    <a href="#" class="w-1/4">
+        <img src="{% if item.product.image %}{{ item.product.image.url }}{%else%}https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg{% endif %}" alt="" class="rounded-xl">
+    </a>
+    <div class="w-3/4 pl-6">
+        <div class="flex justify-between">
+            <a href="" class="text-lg">{{item.product.name}}</a>
+            <span class="mb-6 pt-1 text-gray-600">${{item.product.price}}</span>
+        </div>
+        <hr>
+        <div class="quantity mt-6 flex items-center space-x-4">
+            <a href="" class="bg-gray-100 px-3 py-1 rounded-xl">-</a>
+            <span>{{item.quantity}}</span>
+            <a href="" class="bg-gray-100 px-3 py-1 rounded-xl">+</a>
+        </div>
+    </div>
+</div>
