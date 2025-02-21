@@ -42,9 +42,11 @@ class Cart:
             self.save()
     
     def get_total_cost(self):
-        for p in self.cart.keys():
-            product = Product.objects.get(pk=p)
-            item = self.cart[str(p)]
-            item['product'] = product
+        product_ids = self.cart.keys()
+        products = Product.objects.filter(id__in=product_ids).values('id', 'price')
 
-        return sum(item['quantity'] * item['product'].price for item in self.cart.values())
+        product_prices = {str(p['id']): p['price'] for p in products}
+
+        return sum(item['quantity'] * product_prices[str(p)] for p, item in self.cart.items())
+    def get_item(self, product_id):
+        return self.cart[str(product_id)]

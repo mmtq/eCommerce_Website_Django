@@ -1,4 +1,4 @@
-<div class="product mb-6 flex pr-6">
+<div class="product mb-6 flex pr-6" id ="cart-item-{{item.product.id}}">
     <a href="#" class="w-1/4">
         <img src="{% if item.product.image %}{{ item.product.image.url }}{%else%}https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg{% endif %}" alt="" class="rounded-xl">
     </a>
@@ -9,9 +9,27 @@
         </div>
         <hr>
         <div class="quantity mt-6 flex items-center space-x-4">
-            <a href="" class="bg-gray-100 px-3 py-1 rounded-xl">-</a>
+            <button
+                hx-get = "{% url 'update_cart' item.product.id 'decrement'%}"
+                hx-target = "#cart-item-{{item.product.id}}"
+                hx-swap="outerHTML"
+                hx-trigger="click"
+                hx-on::after-request="htmx.trigger('#cart-total-section', 'refresh')"
+                class="bg-gray-100 px-3 py-1 rounded-xl"
+            >
+                -
+            </button>
             <span>{{item.quantity}}</span>
-            <a href="" class="bg-gray-100 px-3 py-1 rounded-xl">+</a>
+            <button
+                hx-get = "{% url 'update_cart' item.product.id 'increment'%}"
+                hx-target = "#cart-item-{{item.product.id}}"
+                hx-swap="outerHTML"
+                hx-trigger="click"
+                hx-on::after-request="htmx.trigger('#cart-total-section', 'refresh')"
+                class="bg-gray-100 px-3 py-1 rounded-xl"
+            >
+                +
+            </button>
         </div>
     </div>
 </div>
