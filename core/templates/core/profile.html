@@ -15,46 +15,35 @@
     <h2 class="my-6 text-2xl">My Orders</h2>
 
     <div class="w-full mb-6 p-6 bg-gray-100 rounded-xl flex flex-wrap">
+    {% for order in request.user.orders.all %}
         <div class="mb-6 flex justify-between">
-            <a href="">Order #1</a>
+            <a href="">Order id: {{order.id}}</a>
         </div>
+        {% for item in order.items.all %}
         <div class="mb-6 w-full">
             <div class="product mb-6 flex pr-6">
                 <a href="#" class="w-1/4">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt=""  class="rounded-xl w-2/3">
+                    <img src="{%if item.product.image %}{{ item.product.image.url }}{%else%}https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg{% endif %}" alt=""  class="rounded-xl w-2/3">
                 </a>
                 <div class="w-3/4 pl-6">
                     <div class="flex justify-between">
-                        <a href="" class="text-lg">Product Name</a>
-                        <span class="mb-6 pt-1 text-gray-600">$10</span>
+                        <a href="" class="text-lg">{{item.product.name}}</a>
+                        <span class="mb-6 pt-1 text-gray-600">${{item.product.price}}</span>
                     </div>
                     <hr>
                     <div class="mt-6">
-                        Quantity: 1
-                    </div>
-                </div>
-            </div>
-            <div class="product mb-6 flex pr-6">
-                <a href="#" class="w-1/4">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg" alt="" class="rounded-xl w-2/3">
-                </a>
-                <div class="w-3/4 pl-6">
-                    <div class="flex justify-between">
-                        <a href="" class="text-lg">Product Name</a>
-                        <span class="mb-6 pt-1 text-gray-600">$10</span>
-                    </div>
-                    <hr>
-                    <div class="mt-6">
-                        Quantity: 1
+                        Quantity: {{item.quantity}}
                     </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
 
         <div>
-            <p class="text-lg">Date: 12/12/2021</p>
+            <p class="text-lg">Date: {{order.created_at}}</p>
             <p class="text-lg">Total: $20</p>
         </div>
+        {% endfor %}
     </div>
 </div>
 {%endblock%}

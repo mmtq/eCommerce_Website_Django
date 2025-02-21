@@ -4,6 +4,7 @@ from product.models import Product, Category
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from order.models import Order
 # Create your views here.
 
 def index(request):
@@ -35,7 +36,10 @@ def shop(request):
 
 @login_required
 def profile(request):
-    return render(request, 'core/profile.html')
+    orders = request.user.orders.all()
+    for order in orders:
+        print(order.created_at)
+    return render(request, 'core/profile.html', {'orders': orders})
 
 @login_required
 def edit_profile(request):

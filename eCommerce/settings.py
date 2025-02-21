@@ -58,6 +58,7 @@ LOCAL_APPS = [
     'core',
     'product',
     'cart',
+    'order',
 ]
 
 INSTALLED_APPS += ALLAUTH_APPS + LOCAL_APPS
