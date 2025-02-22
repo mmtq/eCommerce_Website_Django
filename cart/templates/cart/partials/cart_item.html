@@ -1,14 +1,15 @@
+{%if item%}
 <div class="product mb-6 flex pr-6" id ="cart-item-{{item.product.id}}">
     <a href="#" class="w-1/4">
         <img src="{% if item.product.image %}{{ item.product.image.url }}{%else%}https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg{% endif %}" alt="" class="rounded-xl">
     </a>
     <div class="w-3/4 pl-6">
         <div class="flex justify-between">
-            <a href="" class="text-lg">{{item.product.name}}</a>
+            <a href="" class="text-lg font-semibold">{{item.product.name}}</a>
             <span class="mb-6 pt-1 text-gray-600">${{item.product.price}}</span>
         </div>
         <hr>
-        <div class="quantity mt-6 flex items-center space-x-4">
+        <div class="quantity mt-6 flex items-center space-x-4 font-semiboldcd">
             <button
                 hx-get = "{% url 'update_cart' item.product.id 'decrement'%}"
                 hx-target = "#cart-item-{{item.product.id}}"
@@ -33,3 +34,4 @@
         </div>
     </div>
 </div>
+{%endif%}

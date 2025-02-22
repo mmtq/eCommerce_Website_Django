@@ -49,4 +49,7 @@ class Cart:
 
         return sum(item['quantity'] * product_prices[str(p)] for p, item in self.cart.items())
     def get_item(self, product_id):
-        return self.cart[str(product_id)]
+        if str(product_id) in self.cart:
+            return self.cart[str(product_id)]
+        else:
+            return None
