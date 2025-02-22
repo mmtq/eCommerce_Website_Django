@@ -41,7 +41,7 @@
 
         <div>
             <p class="text-lg">Date: {{order.created_at}}</p>
-            <p class="text-lg">Total: $20</p>
+            <p class="text-lg">Total: ${{order.paid_amount}}</p>
         </div>
         {% endfor %}
     </div>

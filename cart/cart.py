@@ -53,3 +53,7 @@ class Cart:
             return self.cart[str(product_id)]
         else:
             return None
+        
+    def clear(self):
+        self.session[settings.CART_SESSION_ID] = {}
+        self.session.modified = True
